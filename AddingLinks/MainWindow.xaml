@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AddingLinks"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="462.247" Width="714.91">
     <Grid>
-        <Button Content="Create" HorizontalAlignment="Left" Height="31" Margin="171,115,0,0" VerticalAlignment="Top" Width="108" Click="Button_Click"/>
+        <Button Content="Create" Height="31" Width="108" Click="Button_Click" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,30" />
+        <TextBox x:Name="label1" Visibility="Hidden" BorderBrush="White" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" FontSize="16" FontFamily="Trebuchet MS" Text="" HorizontalAlignment="Center" VerticalAlignment="Top" Height="Auto" Width="Auto"/>
 
     </Grid>
 </Window>
