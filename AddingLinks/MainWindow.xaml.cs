@@ -16,6 +16,8 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Text.RegularExpressions;
+using System.Collections;
+using System.IO;
 
 namespace AddingLinks
 {
@@ -25,6 +27,7 @@ namespace AddingLinks
     public partial class MainWindow : Window
     {
         static string text;
+        static byte[] XML;
         public MainWindow()
         {
             InitializeComponent();
@@ -32,56 +35,45 @@ namespace AddingLinks
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // CreateWordprocessingDocument(@"C:\Users\bezim\Desktop\Invoice.docx"); создание файла
-        
-            string strDoc = @"C:\Users\bezim\Desktop\dsa.docx"; 
-            string strTxt = "Append text in body - OpenAndAddTextToWordDocument";
-            OpenAndAddTextToWordDocument(strDoc, strTxt);
+            string strDoc = @"C:\Users\bezim\Desktop\aaa.docx"; 
+            FileStream file = new FileStream(@"C:\Users\bezim\Desktop\e.txt", FileMode.Open);
+            XML = new byte[file.Length];
+            file.Read(XML, 0, XML.Length);
+            AddTheListOfSourcesUsed(strDoc);
             string pattern = @"\[(\d|\d\d|\d\d\d|\d\d\d\d)\]";
             Regex regex = new Regex(pattern);
-            int counter = 0;
+            int differentMatches = 0;          
+            ArrayList array = new ArrayList();
             foreach (Match match in regex.Matches(text))
             {
-                counter++;
+                if (!array.Contains(match.ToString()))
+                {
+                    differentMatches++;
+                    array.Add(match.ToString());
+                    Console.WriteLine(match);
+                }
             }
-            this.label1.Text = "В тексте найдено "+counter.ToString()+" ссылок на список использованных источников";
+            this.label1.Text = "В тексте найдено " + differentMatches.ToString() + 
+                " различных ссылок на список использованных источников";
             this.label1.Visibility = Visibility.Visible;
         }
-        public static void OpenAndAddTextToWordDocument(string filepath, string txt) // добавление текста в существующий файл
+
+        public static void AddTheListOfSourcesUsed(string filepath)
         {
-            // Open a WordprocessingDocument for editing using the filepath.
             WordprocessingDocument wordprocessingDocument =
                 WordprocessingDocument.Open(filepath, true);
 
-            // Assign a reference to the existing document body.
             Body body = wordprocessingDocument.MainDocumentPart.Document.Body;
 
-            // Add new text.
-            //text = body.InnerXml;
-            text = body.InnerText;
             DocumentFormat.OpenXml.Wordprocessing.Paragraph para = body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph());
             DocumentFormat.OpenXml.Wordprocessing.Run run = para.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Run());
-            run.AppendChild(new Text(txt));
-            
-            // Close the handle explicitly.
-            wordprocessingDocument.Close();
-        }
-        public static void CreateWordprocessingDocument(string filepath) // создание файла
-        {
-            // Create a document by supplying the filepath. 
-            using (WordprocessingDocument wordDocument =
-                WordprocessingDocument.Create(filepath, WordprocessingDocumentType.Document))
-            {
-                // Add a main document part. 
-                MainDocumentPart mainPart = wordDocument.AddMainDocumentPart();
 
-                // Create the document structure and add some text.
-                mainPart.Document = new Document();
-                Body body = mainPart.Document.AppendChild(new Body());
-                DocumentFormat.OpenXml.Wordprocessing.Paragraph para = body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph());
-                DocumentFormat.OpenXml.Wordprocessing.Run run = para.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Run());
-                run.AppendChild(new Text("Create text in body - CreateWordprocessingDocument"));
-            }
+            text = body.InnerText;
+
+            string result = System.Text.Encoding.UTF8.GetString(XML);
+            body.InnerXml += result;
+
+            wordprocessingDocument.Close();
         }
     }
 }
