@@ -1,0 +1,21 @@
+﻿<Controls:MetroWindow x:Class="AddingLinks.SourcesTable"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AddingLinks"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="Выбрать источник из БД" Height="400" Width="600"
+        WindowStartupLocation="CenterScreen"
+        BorderThickness="2"
+        BorderBrush="#FF086F9E"
+        ResizeMode="CanMinimize" Closing="MetroWindow_Closing">
+    <Grid>
+        <DataGrid BorderThickness="1" BorderBrush="Black" x:Name="TableGrid" Height="295" VerticalAlignment="Top" Margin="0,8,0,0" Width="570" IsReadOnly="True" SelectionMode="Single" GridLinesVisibility="All" HorizontalAlignment="Center">
+        </DataGrid>
+        <Button Content="Обновить" HorizontalAlignment="Left" Margin="35,0,0,15" Width="150" FontSize="16" Click="UpdateTable" Height="35" VerticalAlignment="Bottom" FontFamily="Trebuchet MS" FontWeight="Normal"/>
+        <Button Content="Поиск" HorizontalAlignment="Right" Margin="0,0,35,15" Width="150" FontSize="16" Click="SearchInDB" Height="35" VerticalAlignment="Bottom" FontFamily="Trebuchet MS" FontWeight="Normal"/>
+        <Button Content="Выбрать" HorizontalAlignment="Center" Margin="0,0,0,15" Width="150" FontSize="16" Click="SelectFromDB" Height="35" VerticalAlignment="Bottom" FontFamily="Trebuchet MS" FontWeight="Normal"/>
+    </Grid>
+</Controls:MetroWindow>

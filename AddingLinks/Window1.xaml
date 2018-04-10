@@ -1,29 +1,70 @@
-﻿<Window x:Class="AddingLinks.Window1"
+﻿<Controls:MetroWindow x:Class="AddingLinks.Window1"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AddingLinks"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="Window1" Height="310.5" Width="387" 
+        Title="Window1" Height="300" Width="620" 
         Closing="DataWindow_Closing"
         FontFamily="Trebuchet MS"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        BorderThickness="1"
+        BorderBrush="#FF086F9E">
     <Grid>
         <Label x:Name="sourceXFromX" Content="Формирование ссылки Х из Х" HorizontalAlignment="Center" Margin="0,6,0,0" VerticalAlignment="Top" Height="auto" Width="auto" FontSize="14"/>
-        <Label Content="Тип источника" HorizontalAlignment="Left" Margin="41,38,0,0" VerticalAlignment="Top"/>
-        <Label Content="Название" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="218,38,0,0"/>
-        <TextBox x:Name="secondBox" HorizontalAlignment="Left" Height="23" Margin="218,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="141"/>
-        <Label x:Name="thirdLabel" Content="Гиперссылка" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,104,0,0"/>
-        <TextBox x:Name="thirdBox" HorizontalAlignment="Left" Height="23" Margin="41,125,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="141"/>
-        <Button Content="Далее" HorizontalAlignment="Left" Margin="145,243,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Label x:Name="fourthLabel" Visibility="Hidden" Content="Год" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="218,104,0,0"/>
-        <TextBox x:Name="fourthBox" Visibility="Hidden" HorizontalAlignment="Left" Height="23" Margin="218,125,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="141"/>
-        <Label x:Name="fifthLabel" Visibility="Hidden" Content="Страница" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,171,0,0"/>
-        <TextBox x:Name="fifthBox" Visibility="Hidden" HorizontalAlignment="Left" Height="23" Margin="41,192,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="141"/>
-        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="41,62,0,0" VerticalAlignment="Top" Width="145" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
-            <ComboBoxItem x:Uid="1"  Content="Электронный ресурс" HorizontalAlignment="Left" Width="145"/>
-            <ComboBoxItem Content="Литература" HorizontalAlignment="Left" Width="145"/>
+
+        <TextBox x:Name="Name" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,60,40,0" Width="240" Height="40"
+                Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                Controls:TextBoxHelper.IsWaitingForData="True"
+                Controls:TextBoxHelper.UseFloatingWatermark="True"
+                Controls:TextBoxHelper.Watermark="Название"
+                Style="{StaticResource MyTextBox}"/>
+        <TextBox x:Name="LinkOrAuthors" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,130,0,0" Width="240" Height="40"
+                Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                Controls:TextBoxHelper.IsWaitingForData="True"
+                Controls:TextBoxHelper.UseFloatingWatermark="True"
+                Controls:TextBoxHelper.Watermark="Ссылка"
+                Style="{StaticResource MyTextBox}"/>
+        <TextBox Visibility="Hidden" x:Name="YearBox" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,130,40,0" Width="240" Height="40"
+                Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                Controls:TextBoxHelper.IsWaitingForData="True"
+                Controls:TextBoxHelper.UseFloatingWatermark="True"
+                Controls:TextBoxHelper.Watermark="Год"
+                Style="{StaticResource MyTextBox}"
+                 PreviewTextInput="PreviewTextInputDigit"/>
+        <TextBox Visibility="Hidden" x:Name="Pages" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,200,0,0" Width="240" Height="40"
+                Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                Controls:TextBoxHelper.IsWaitingForData="True"
+                Controls:TextBoxHelper.UseFloatingWatermark="True"
+                Controls:TextBoxHelper.Watermark="Страница(-ы)"
+                Style="{StaticResource MyTextBox}"/>
+        <TextBox Visibility="Hidden" x:Name="City" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,200,40,0" Width="240" Height="40"
+                Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                Controls:TextBoxHelper.IsWaitingForData="True"
+                Controls:TextBoxHelper.UseFloatingWatermark="True"
+                Controls:TextBoxHelper.Watermark="Город"
+                Style="{StaticResource MyTextBox}"/>
+        <TextBox Visibility="Hidden" x:Name="Publisher" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,270,0,0" Width="240" Height="40"
+                Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                Controls:TextBoxHelper.IsWaitingForData="True"
+                Controls:TextBoxHelper.UseFloatingWatermark="True"
+                Controls:TextBoxHelper.Watermark="Издательство"
+                Style="{StaticResource MyTextBox}"/>
+        <TextBox Visibility="Hidden" x:Name="Volume" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,270,40,0" Width="240" Height="40"
+                Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                Controls:TextBoxHelper.IsWaitingForData="True"
+                Controls:TextBoxHelper.UseFloatingWatermark="True"
+                Controls:TextBoxHelper.Watermark="Том"
+                Style="{StaticResource MyTextBox}"
+                 PreviewTextInput="PreviewTextInputDigit"/>
+        <Button x:Name="Next" Content="Далее" HorizontalAlignment="Center" Margin="180,0,0,30" Width="150" FontSize="16" Click="Button_Click" Height="35" VerticalAlignment="Bottom" FontFamily="Trebuchet MS" FontWeight="Normal"/>
+        <Button x:Name="FromDB"  Content="Данные из БД" HorizontalAlignment="Center" Margin="0,0,180,30" Width="150" FontSize="16" Click="From_DB" Height="35" VerticalAlignment="Bottom" FontFamily="Trebuchet MS" FontWeight="Normal"/>
+        <ComboBox x:Name="comboBox1" Width="240" Height="40" HorizontalAlignment="Left" Margin="40,60,0,0" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBoxItem Content="Электронный ресурс" HorizontalAlignment="Left" Width="240"/>
+            <ComboBoxItem Content="Литература" HorizontalAlignment="Left" Width="240"/>
         </ComboBox>
     </Grid>
-</Window>
+</Controls:MetroWindow>

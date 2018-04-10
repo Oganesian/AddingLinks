@@ -5,13 +5,14 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.IO;
 using Microsoft.Win32;
+using System.Text;
 
 namespace AddingLinks
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         static string text;
         public MainWindow()
@@ -43,9 +44,16 @@ namespace AddingLinks
                     array.Add(match.ToString());
                 }
             }
-            Window1 window = new Window1(differentMatches, filePath1.Text);
-            window.Show();
-            this.Close();
+            if(differentMatches < 1)
+            {
+                MessageBox.Show("Ссылок на список использованных источников в документе не найдено", "Нет ссылок", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            else
+            {
+                Window1 window = new Window1(differentMatches, filePath1.Text);
+                window.Show();
+                this.Close();
+            }
         }
 
         public void AddTheListOfSourcesUsed(string filepath)
@@ -58,7 +66,10 @@ namespace AddingLinks
             DocumentFormat.OpenXml.Wordprocessing.Paragraph para = body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph());
                 DocumentFormat.OpenXml.Wordprocessing.Run run = para.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Run());
             text = body.InnerText;
-
+            FileStream fl = new FileStream(@"NEWXML.xml", FileMode.OpenOrCreate);
+            byte[] innerxml = Encoding.UTF8.GetBytes(body.InnerXml);
+            fl.Write(innerxml, 0, innerxml.Length);
+            fl.Close();
             wordprocessingDocument.Close();
         }
 
